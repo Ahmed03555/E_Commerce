@@ -1,6 +1,7 @@
 ﻿using E_Commerce.Domain.Common;
 using E_Commerce.Domain.Contarct;
 using E_Commerce.Infrastructure.Date;
+using E_Commerce.Infrastructure.Specification;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,21 @@ namespace E_Commerce.Infrastructure.Repsitories
             return await dbContext.Set<TEntity>().ToListAsync(cancellationToken);
         }
 
+        public async Task<IReadOnlyList<TEntity>> GetAllAsync(ISpecification<TEntity, TKey> specs, CancellationToken cancellationToken = default)
+        {
+            var query = SpecificationEvaluator.CreateQuery(dbContext.Set<TEntity>(),specs);
+            return await query.ToListAsync(cancellationToken);
+        }
+
         public async Task<TEntity?> GetByIdAsync(TKey id, CancellationToken cancellationToken = default)
         {
             return await dbContext.Set<TEntity>().FindAsync(id, cancellationToken);
+        }
+
+        public async Task<TEntity?> GetByIdAsync(ISpecification<TEntity, TKey> specs, CancellationToken cancellationToken = default)
+        {
+            var query = SpecificationEvaluator.CreateQuery(dbContext.Set<TEntity>(), specs);
+            return await query.FirstOrDefaultAsync(cancellationToken);
         }
 
         public void Remove(TEntity entity)

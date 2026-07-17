@@ -14,5 +14,9 @@ namespace E_Commerce.Domain.Contarct
 
         Task<IReadOnlyList<TEntity>> GetAllAsync(CancellationToken cancellationToken = default);
         Task<TEntity?> GetByIdAsync(TKey id, CancellationToken cancellationToken = default);
+
+        Task<TEntity?> GetByIdAsync(ISpecification<TEntity, TKey> specs, CancellationToken cancellationToken = default);
+
+        Task<IReadOnlyList<TEntity>> GetAllAsync(ISpecification<TEntity,TKey> specs,CancellationToken cancellationToken = default);
     }
 }
