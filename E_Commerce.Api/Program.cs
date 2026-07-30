@@ -2,6 +2,7 @@
 using E_Commerce.Application.Profiles;
 using E_Commerce.Application.Services;
 using E_Commerce.Infrastructure;
+using E_Commerce.Infrastructure.Identity.Services;
 using Microsoft.Extensions.FileProviders;
 
 namespace E_Commerce.Api
@@ -26,6 +27,7 @@ namespace E_Commerce.Api
             builder.Services.AddInfrastructureServices(builder.Configuration);
             builder.Services.AddApplicationServices();
             builder.Services.Configure<UrlSettings>(builder.Configuration.GetSection("UrlSettings"));
+            builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 
             var app = builder.Build();
 
@@ -46,7 +48,7 @@ namespace E_Commerce.Api
                 );
 
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

@@ -1,5 +1,6 @@
 ﻿using E_Commerce.Application.Contracts;
 using E_Commerce.Application.DTOs.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,5 +32,34 @@ namespace E_Commerce.Api.Controllers
             var result = await _services.RegisterAsync(registerDto, cancellationToken);
             return ToActionResult(result);
         }
+        [HttpGet("emailexists")]
+        public async Task<ActionResult<bool>> CheckEmail([FromQuery] string email,CancellationToken cancellationToken = default)
+        {
+            var result = await _services.CheckEmailAsync(email,cancellationToken);
+            return ToActionResult(result);
+        }
+        [Authorize]
+        [HttpGet("CurrentUser")]
+        public async Task<ActionResult<UserDto>> GetCurrentUaser (CancellationToken cancellationToken = default)
+        {
+            var result = await _services.GetCurrentUserAsync(GetEmailToken());
+            return ToActionResult(result);
+        }
+        [Authorize]
+        [HttpGet("address")]
+        public async Task<ActionResult<AddressDto>> GetUserAddress(CancellationToken cancellationToken = default)
+        {
+            var result = await _services.GetUserAddress(GetEmailToken(),cancellationToken);
+            return ToActionResult(result);
+        }
+
+        [Authorize]
+        [HttpPut("address")]
+        public async Task<ActionResult<AddressDto>> updateUserAddress(AddressDto addressDto,CancellationToken cancellationToken = default)
+        {
+            var result = await _services.UpdateUserAddressAsync(addressDto, GetEmailToken(), cancellationToken);
+            return ToActionResult(result);
+        }
+
     }
 }
