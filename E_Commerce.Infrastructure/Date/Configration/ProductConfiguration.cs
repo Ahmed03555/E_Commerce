@@ -19,7 +19,7 @@ namespace E_Commerce.Infrastructure.Date.Configration
                 .HasMaxLength(580);
 
             builder.Property(p => p.PictureUrl)
-                .HasMaxLength(180);
+                .HasMaxLength(180); 
 
             builder.Property(p => p.Price)
                 .HasColumnType("decimal(18,2)");
