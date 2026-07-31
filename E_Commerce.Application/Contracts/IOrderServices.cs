@@ -11,5 +11,12 @@ namespace E_Commerce.Application.Contracts
     public interface IOrderServices
     {
         Task<Result<OrderToResultDto>> CreateOrderAsync(OrderDto orderDto,string email,CancellationToken cancellationToken =default);
+        Task<Result<IReadOnlyList<OrderToResultDto>>> GetAllOrdersByEmailAsync(string email, CancellationToken ct = default);
+
+        Task<Result<IReadOnlyList<DeliveryMethodDto>>> GetAllDeliveryMethodsAsync(CancellationToken ct = default);
+
+        Task<Result<OrderToResultDto>> GetOrderByIdAndEmailAsync(Guid Id, string email, CancellationToken ct = default);
+
+
     }
 }

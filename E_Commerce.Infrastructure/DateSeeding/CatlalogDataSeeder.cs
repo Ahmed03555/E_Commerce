@@ -1,5 +1,6 @@
 ﻿using E_Commerce.Domain.Common;
 using E_Commerce.Domain.Contarct;
+using E_Commerce.Domain.Entity.Orders;
 using E_Commerce.Domain.Entity.Products;
 using E_Commerce.Infrastructure.Date;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +35,8 @@ namespace E_Commerce.Infrastructure.DateSeeding
                 await SeedIfEmpty<Product, int>(seedRoot, "products.json", cancellationToken);
                 await SeedIfEmpty<ProductBrand, int>(seedRoot, "brands.json", cancellationToken);
                 await SeedIfEmpty<ProductType, int>(seedRoot, "types.json", cancellationToken);
+                await SeedIfEmpty<DeliveryMethod, int>(seedRoot, "delivery.json", cancellationToken);
+
 
                 var Result = await _context.SaveChangesAsync(cancellationToken);
                 if (Result > 0)
