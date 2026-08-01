@@ -28,6 +28,8 @@ namespace E_Commerce.Api
             builder.Services.AddApplicationServices();
             builder.Services.Configure<UrlSettings>(builder.Configuration.GetSection("UrlSettings"));
             builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
+            builder.Services.Configure<PaymentGatewaySettings>(builder.Configuration.GetSection("Stripe"));
+
 
             var app = builder.Build();
 

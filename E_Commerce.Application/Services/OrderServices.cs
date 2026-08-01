@@ -68,7 +68,7 @@ namespace E_Commerce.Application.Services
 
             var subTotal = orderItems.Sum(OI => OI.Price * OI.Quantity);
 
-            var order = new Order(email, orderItems,  deliveryMethod, orderAddress, subTotal);
+            var order = new Order(email, orderItems,  deliveryMethod, orderAddress, subTotal, basket.PaymentIntentId);
 
             var orderRepo = _uniteOf.GetRepository<Order, Guid>();
             orderRepo.Add(order);
